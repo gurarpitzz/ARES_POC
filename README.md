@@ -30,6 +30,40 @@ Given a claim C, ARES:
 ```bash
 pip install -r requirements.txt
 ```
+---
+
+## Web Interface Preview (ARES_UI)
+
+ARES also includes a research-grade visualization interface for inspecting the mathematical verification process.
+
+### Overall Interface
+
+![ARES UI Overview](assets/ui_overview.png)
+
+---
+
+### Verdict Dashboard
+
+The verdict panel shows the final decision along with the computed Truth Score and Confidence derived from the functional.
+
+![Verdict Panel](assets/verdict_panel.png)
+
+---
+
+### Mathematical Evidence Trace
+
+Every evidence passage contributing to the verdict is shown with:
+
+- Semantic Similarity \(S(C,E)\)
+- Entailment Score \(N(C,E)\)
+- Source Weight \(W(E)\)
+- Individual Contribution to Truth'
+
+This ensures full transparency of the decision process.
+
+![Evidence Trace](assets/evidence_trace.png)
+
+---
 
 ### Run single claim verification
 
