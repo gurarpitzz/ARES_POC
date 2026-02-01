@@ -1,0 +1,162 @@
+:root {
+    --bg-color: #f8f9fa;
+    --text-color: #212529;
+    --border-color: #dee2e6;
+    --primary-color: #0d6efd;
+    --verified-color: #198754;
+    --misinfo-color: #dc3545;
+    --uncertain-color: #6c757d;
+    --mono-font: 'JetBrains Mono', monospace;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+h1 { margin: 0; font-weight: 800; letter-spacing: -1px; }
+.subtitle { margin: 0; color: #666; font-size: 0.9rem; }
+.equation { font-family: var(--mono-font); font-size: 1.1rem; color: var(--primary-color); opacity: 0.8; }
+
+.input-panel {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+button {
+    padding: 12px 25px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+button:hover { background: #0b5ed7; }
+button:disabled { background: #ccc; cursor: not-allowed; }
+
+.params {
+    display: flex;
+    gap: 20px;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.params input {
+    width: 60px;
+    padding: 5px;
+    border: 1px solid var(--border-color);
+    border-radius: 3px;
+}
+
+#resultPanel.hidden { display: none; }
+#resultPanel.loading { opacity: 0.5; pointer-events: none; }
+
+.verdict-card {
+    padding: 40px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 40px;
+    transition: all 0.3s;
+}
+
+.verdict-card.verified { background: #e6f4ea; border: 1px solid var(--verified-color); color: var(--verified-color); }
+.verdict-card.misinformation { background: #fce8e6; border: 1px solid var(--misinfo-color); color: var(--misinfo-color); }
+.verdict-card.uncertain { background: #f1f3f4; border: 1px solid var(--uncertain-color); color: var(--uncertain-color); }
+
+.verdict-primary h2 { margin: 0; font-size: 3rem; font-weight: 800; }
+.verdict-primary span { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; }
+
+.metrics {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    margin-top: 25px;
+}
+
+.metric { display: flex; flex-direction: column; }
+.metric .label { font-size: 0.7rem; color: #666; letter-spacing: 1px; }
+.metric .value { font-family: var(--mono-font); font-size: 1.8rem; font-weight: 600; }
+
+.trace-section h3 { font-size: 1.2rem; border-left: 4px solid var(--primary-color); padding-left: 15px; margin-bottom: 20px; }
+
+.table-container {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+th {
+    background: #f1f3f4;
+    text-align: left;
+    padding: 15px;
+    font-weight: 600;
+}
+
+td {
+    padding: 15px;
+    border-top: 1px solid var(--border-color);
+}
+
+.source-cell { font-family: var(--mono-font); font-size: 0.85rem; }
+.source-cell a { color: var(--primary-color); text-decoration: none; }
+.n-val { font-weight: 800; font-family: var(--mono-font); }
+.n-val.pos { color: var(--verified-color); }
+.n-val.neg { color: var(--misinfo-color); }
+.contrib-cell { font-weight: 600; font-family: var(--mono-font); }
+.text-cell { color: #666; font-size: 0.8rem; }
+
+footer {
+    text-align: center;
+    margin-top: 60px;
+    font-size: 0.8rem;
+    color: #999;
+    border-top: 1px solid var(--border-color);
+    padding-top: 20px;
+}

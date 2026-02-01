@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARES: Autonomous Real-Time Evidence System</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-area">
+                <h1>🛡️ ARES_POC</h1>
+                <p class="subtitle">Research-Grade Misinformation Intelligence</p>
+            </div>
+            <div class="equation">
+                $$Truth'(C) = \frac{\sum S \cdot N \cdot W}{\sum S}$$
+            </div>
+        </header>
+
+        <main>
+            <section class="input-panel">
+                <div class="input-group">
+                    <input type="text" id="claimInput"
+                        placeholder="Enter a claim to verify (e.g., 'The Earth orbits the Sun')"
+                        value="The Earth orbits the Sun">
+                    <button id="verifyBtn">RUN FUNCTIONAL</button>
+                </div>
+                <div class="params">
+                    <label>k (Retrieval): <input type="number" id="kParam" value="10" min="1"></label>
+                    <label>m (Selection): <input type="number" id="mParam" value="5" min="1"></label>
+                </div>
+            </section>
+
+            <section id="resultPanel" class="hidden">
+                <div class="verdict-card" id="verdictCard">
+                    <div class="verdict-primary">
+                        <span id="verdictLabel">VERDICT</span>
+                        <h2 id="verdictStatus">---</h2>
+                    </div>
+                    <div class="metrics">
+                        <div class="metric">
+                            <span class="label">TRUTH SCORE</span>
+                            <span class="value" id="truthScore">0.0000</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">CONFIDENCE</span>
+                            <span class="value" id="confidenceScore">0.0000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="trace-section">
+                    <h3>Mathematical Evidence Trace</h3>
+                    <div class="table-container">
+                        <table id="traceTable">
+                            <thead>
+                                <tr>
+                                    <th>Source / Domain</th>
+                                    <th>S(C, E)</th>
+                                    <th>N(C, E)</th>
+                                    <th>W(E)</th>
+                                    <th>Contrib.</th>
+                                    <th>Passage Snippet</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Traces injected here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Built for Peer-Review Integrity | Modular Architecture v1.0.0</p>
+        </footer>
+    </div>
+
+    <script>
+        const verifyBtn = document.getElementById('verifyBtn');
+        const claimInput = document.getElementById('claimInput');
+        const resultPanel = document.getElementById('resultPanel');
+        const traceTableBody = document.querySelector('#traceTable tbody');
+
+        verifyBtn.addEventListener('click', async () => {
+            const claim = claimInput.value;
+            const k = parseInt(document.getElementById('kParam').value);
+            const m = parseInt(document.getElementById('mParam').value);
+
+            if (!claim) return;
+
+            // Handle file:// origin for research convenience
+            const apiBase = window.location.protocol === 'file:' ? 'http://127.0.0.1:8000' : '';
+
+            verifyBtn.disabled = true;
+            verifyBtn.textContent = "VERIFYING...";
+            resultPanel.classList.add('loading');
+
+            try {
+                const response = await fetch(`${apiBase}/verify`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ claim, k, m })
+                });
+
+                if (!response.ok) throw new Error(`Server Error: ${response.status}`);
+
+                const data = await response.json();
+                displayResult(data);
+            } catch (err) {
+                console.error(err);
+                if (window.location.protocol === 'file:') {
+                    alert("ARES Logic Error: You are viewing via file://. I've attempted to link to 127.0.0.1:8000, but ensure the server is RUNNING in the terminal.");
+                } else {
+                    alert("Functional Error: Check server logs.");
+                }
+            } finally {
+                verifyBtn.disabled = false;
+                verifyBtn.textContent = "RUN FUNCTIONAL";
+                resultPanel.classList.remove('loading');
+            }
+        });
+
+        function displayResult(data) {
+            resultPanel.classList.remove('hidden');
+
+            // Verdict logic
+            const status = document.getElementById('verdictStatus');
+            const card = document.getElementById('verdictCard');
+            status.textContent = data.verdict;
+
+            card.className = "verdict-card " + data.verdict.toLowerCase();
+
+            document.getElementById('truthScore').textContent = data.truth_score.toFixed(4);
+            document.getElementById('confidenceScore').textContent = data.confidence.toFixed(4);
+
+            // Table trace
+            traceTableBody.innerHTML = '';
+            data.trace.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="source-cell"><a href="${item.source}" target="_blank">${new URL(item.source).hostname}</a></td>
+                    <td>${item.similarity.toFixed(3)}</td>
+                    <td class="n-val ${item.entailment > 0 ? 'pos' : item.entailment < 0 ? 'neg' : ''}">${item.entailment}</td>
+                    <td>${item.weight.toFixed(2)}</td>
+                    <td class="contrib-cell">${item.contribution.toFixed(3)}</td>
+                    <td class="text-cell" title="${item.text}">${item.text.substring(0, 100)}...</td>
+                `;
+                traceTableBody.appendChild(row);
+            });
+        }
+    </script>
+</body>
+
+</html>
