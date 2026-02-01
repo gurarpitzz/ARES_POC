@@ -5,9 +5,10 @@
 ARES_POC is a mathematically grounded misinformation verification system.  
 Unlike LLM-based fact checkers, ARES computes truth using a deterministic evidence functional:
 
-\[
-Truth'(C) = \frac{\sum S(C,E)\cdot N(C,E)\cdot W(E)}{\sum S(C,E)}
-\]
+$$
+Truth'(C) = \frac{\sum_{i=1}^{M} S(C,E_i)\cdot N(C,E_i)\cdot W(E_i)}{\sum_{i=1}^{M} S(C,E_i)}
+$$
+
 
 This repository is the Proof-of-Concept implementation accompanying the research manuscript.
 
