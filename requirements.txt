@@ -1,0 +1,12 @@
+sentence-transformers
+transformers
+torch
+scikit-learn
+duckduckgo-search
+ddgs
+beautifulsoup4
+requests
+fastapi
+uvicorn
+pandas
+datasets
