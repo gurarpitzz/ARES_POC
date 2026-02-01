@@ -38,7 +38,7 @@ ARES also includes a research-grade visualization interface for inspecting the m
 
 ### Overall Interface
 
-![ARES UI Overview](assets/ui_overview.png)
+![ARES UI Overview](assets/ui_input.png)
 
 ---
 
@@ -46,7 +46,7 @@ ARES also includes a research-grade visualization interface for inspecting the m
 
 The verdict panel shows the final decision along with the computed Truth Score and Confidence derived from the functional.
 
-![Verdict Panel](assets/verdict_panel.png)
+![Verdict Panel](assets/ui_verdict.png)
 
 ---
 
@@ -61,7 +61,7 @@ Every evidence passage contributing to the verdict is shown with:
 
 This ensures full transparency of the decision process.
 
-![Evidence Trace](assets/evidence_trace.png)
+![Evidence Trace](assets/ui_trace.png)
 
 ---
 
