@@ -1,6 +1,6 @@
 ![GitHub stars](https://img.shields.io/github/stars/gurarpitzz/ARES_POC)
 ![GitHub license](https://img.shields.io/github/license/gurarpitzz/ARES_POC)
-# ARES_POC — Research Verification Engine
+# ARES_POC(Autonomous Real-time Evaluation System Proof) — Research Verification Engine
 
 ARES_POC is a mathematically grounded misinformation verification system.  
 Unlike LLM-based fact checkers, ARES computes truth using a deterministic evidence functional:
